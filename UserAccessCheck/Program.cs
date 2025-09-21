@@ -4,8 +4,23 @@ string username = Console.ReadLine() ?? "";
 Console.Write("Enter password: ");
 string password = Console.ReadLine() ?? "";
 
-bool usernameValid = username.Length >= 3;   // bruger .Length
-bool passwordValid = password.Contains('s'); // bruger .Contains('s')
+Console.Write("Enter user id: ");
+uint userId = uint.Parse(Console.ReadLine() ?? "0");
+
+bool userIsAdmin = userId > 65536;
+bool usernameValid = username.Length >= 3;
+bool passwordContainsSpecial = password.Contains('$') || password.Contains('[') || password.Contains('@');
+bool passwordValid = false;
+
+if (userIsAdmin)
+{
+    passwordValid = password.Length >= 20 && passwordContainsSpecial;
+}
+else
+{
+    passwordValid = password.Length >= 16 && passwordContainsSpecial;
+}
+
 
 if (usernameValid && passwordValid)
 {
